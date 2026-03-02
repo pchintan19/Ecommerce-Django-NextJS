@@ -1,6 +1,6 @@
 import ProductViewPage from "Components/Products/ProductViewPage";
 const View = () => {
-    reutrn (
+    return (
         <ProductViewPage />
     )
 }

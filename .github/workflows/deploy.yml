@@ -1,0 +1,25 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            cd ~/Ecommerce-Django-NextJS/frontend
+            git pull origin main
+            docker stop frontend-container || true
+            docker rm frontend-container || true
+            docker build -t ecommerce-frontend .
+            docker run -d -p 3000:3000 --name frontend-container ecommerce-frontend
