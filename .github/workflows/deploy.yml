@@ -17,9 +17,5 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
-            cd ~/Ecommerce-Django-NextJS/frontend
-            git pull origin main
-            docker stop frontend-container || true
-            docker rm frontend-container || true
-            docker build -t ecommerce-frontend .
-            docker run -d -p 3000:3000 --name frontend-container ecommerce-frontend
+            cd ~/Ecommerce-Django-NextJS
+            ./deploy.sh
